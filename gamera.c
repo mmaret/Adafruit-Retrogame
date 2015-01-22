@@ -112,9 +112,9 @@ static struct Emulator {
   int        (*itemize)(Game *, int);          // Filenames to item list
   void       (*command)(Game *, char *);       // Prepare command line
 } emulator[] = {
-  { "MAME:", "/boot/advmame/rom", NULL,
+  { "MAME:", "/home/pi/ROM/mame", NULL,
      mameInit, mameFilter, NULL     , mameItemize, mameCommand },
-  { "NES:" , "/boot/fceu/rom"   , NULL,
+  { "NES:" , "/home/pi/ROM/nes"   , NULL,
      NULL    , fceuFilter, alphasort, fceuItemize, fceuCommand }
 };
 #define N_EMULATORS (sizeof(emulator) / sizeof(emulator[0]))
