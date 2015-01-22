@@ -93,12 +93,12 @@ struct {
 	// Input   Output (from /usr/include/linux/input.h)
 	{   2,     KEY_LEFT     },   // Joystick (4 pins)
 	{   3,     KEY_RIGHT    },
-	{   4,     KEY_DOWN     },
-	{  17,     KEY_UP       },
-	{  27,     KEY_Z        },   // A/Fire/jump/primary
-	{  22,     KEY_X        },   // B/Bomb/secondary
-	{  23,     KEY_R        },   // Credit
-	{  18,     KEY_Q        },   // Start 1P
+	{   4,     KEY_UP     },
+	{  17,     KEY_DOWN       },
+	{  27,     KEY_R        },   // A/Fire/jump/primary
+	{   7,     KEY_Q        },   // B/Bomb/secondary
+	{  23,     KEY_Z        },   // Credit
+	{  22,     KEY_X        },   // Start 1P
 	{  -1,     -1           } }, // END OF LIST, DO NOT CHANGE
 	// MAME must be configured with 'z' & 'x' as buttons 1 & 2 -
 	// this was required for the accompanying 'menu' utility to
@@ -133,7 +133,7 @@ struct {
 // Also key auto-repeat times are set here.  This is for navigating the
 // game menu using the 'gamera' utility; MAME disregards key repeat
 // events (as it should).
-const unsigned long vulcanMask = (1L << 6) | (1L << 7);
+const unsigned long vulcanMask = (1L << 4) | (1L << 5);
 const int           vulcanKey  = KEY_ESC, // Keycode to send
                     vulcanTime = 1500,    // Pinch time in milliseconds
                     repTime1   = 500,     // Key hold time to begin repeat
