@@ -140,8 +140,8 @@ struct vulcanMap {
 };
 struct vulcanMap vulcanKeys[] = {
 	   {((1L << 4) | (1L << 5)), KEY_ESC},
-	   {((1L << 4) | (1L << 6)), KEY_S},
-	   {((1L << 4) | (1L << 7)), KEY_L}
+	   {((1L << 4) | (1L << 6)), KEY_L},
+	   {((1L << 4) | (1L << 7)), KEY_S},
 };
 const int           vulcanTime = 1500,    // Pinch time in milliseconds
                     repTime1   = 500,     // Key hold time to begin repeat
