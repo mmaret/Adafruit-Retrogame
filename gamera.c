@@ -332,7 +332,7 @@ static void mameCommand(Game *g, char *cmdline) {
 // fceu-specific filter function for scandir() -- given a dirent struct,
 // returns 1 if it's a likely ROM file candidate (ends in .gb).
 static int gboyFilter(const struct dirent *d) {
-	static const char *ext[] = { "gb", "gbc" };
+	static const char *ext[] = { "gb", "gbc", "gba" };
 	char              *ptr;
 	int                i;
 
@@ -361,7 +361,7 @@ static int gboyItemize(Game *gList, int i) {
 // Given a Game struct and an output buffer, format a command string
 // for invoking fceu via system()
 static void gboyCommand(Game *g, char *cmdline) {
-	(void)sprintf(cmdline, "fbgnuboy \"%s/%s\"",
+	(void)sprintf(cmdline, "FRAMEBUFFER=/dev/fb1 SDL_FBDEV=/dev/fb1 /usr/games/mednafen \"%s/%s\" > /var/log/gnuboy.log",
 	  emulator[g->emu].romPath, g->name);
 }
 
