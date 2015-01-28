@@ -100,12 +100,14 @@ static void
 static void
 	mameCommand(Game *, char *),
 	fceuCommand(Game *, char *),
-	gboyCommand(Game *, char *);
+	gboyCommand(Game *, char *),
+	systemCommand(Game *, char *);
 
 static int
   mameFilter(const struct dirent *), mameItemize(Game *, int),
   fceuFilter(const struct dirent *), fceuItemize(Game *, int),
-  gboyFilter(const struct dirent *), gboyItemize(Game *, int);
+  gboyFilter(const struct dirent *), gboyItemize(Game *, int),
+  systemFilter(const struct dirent *), systemItemize(Game *, int);
 
 // List of supported emulators
 static struct Emulator {
@@ -123,7 +125,9 @@ static struct Emulator {
   { "NES:" , "/home/pi/ROM/nes"   , NULL,
      NULL    , fceuFilter, alphasort, fceuItemize, fceuCommand },
   { "GameBoy:" , "/home/pi/ROM/gameboy"   , NULL,
-     NULL    , gboyFilter, alphasort, gboyItemize, gboyCommand }
+     NULL    , gboyFilter, alphasort, gboyItemize, gboyCommand },
+  { "System" , "/home/pi/ROM/system"   , NULL,
+     NULL    , systemFilter , alphasort, systemItemize, systemCommand }
 };
 #define N_EMULATORS (sizeof(emulator) / sizeof(emulator[0]))
 
@@ -359,6 +363,30 @@ static int gboyItemize(Game *gList, int i) {
 static void gboyCommand(Game *g, char *cmdline) {
 	(void)sprintf(cmdline, "fbgnuboy \"%s/%s\"",
 	  emulator[g->emu].romPath, g->name);
+}
+
+// System-specific globals and code -----------------------------------------
+static int systemFilter(const struct dirent *d) {
+	if(((d->d_type == DT_REG) || (d->d_type == DT_LNK)) &&
+	   (d->d_name[0] != '.')) {
+		return 1;
+	}
+	return 0;
+}
+
+static int systemItemize(Game *gList, int i) {
+	char *str;
+	for(; gList; gList=gList->next) {
+		if((str = strdup(gList->name))) {
+			items[i] = new_item(str, NULL);
+			set_item_userptr(items[i++], gList);
+		}
+	}
+	return i; // Return next items[] index
+}
+
+static void systemCommand(Game *g, char *cmdline) {
+	(void)sprintf(cmdline, "bash \"%s/%s\"",emulator[g->emu].romPath, g->name);
 }
 // NES-specific globals and code -----------------------------------------
 
