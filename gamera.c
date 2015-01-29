@@ -100,7 +100,7 @@ static void
 static void
 	mameCommand(Game *, char *),
 	fceuCommand(Game *, char *),
-	gboyCommand(Game *, char *),
+	mednafenCommand(Game *, char *),
 	systemCommand(Game *, char *);
 
 static int
@@ -125,7 +125,11 @@ static struct Emulator {
   { "NES:" , "/home/pi/ROM/nes"   , NULL,
      NULL    , fceuFilter, alphasort, fceuItemize, fceuCommand },
   { "GameBoy:" , "/home/pi/ROM/gameboy"   , NULL,
-     NULL    , gboyFilter, alphasort, gboyItemize, gboyCommand },
+     NULL    , gboyFilter, alphasort, gboyItemize, mednafenCommand },
+  { "Lynx:" , "/home/pi/ROM/lynx"   , NULL,
+     NULL    , systemFilter, alphasort, gboyItemize, mednafenCommand },
+  { "GameGear:" , "/home/pi/ROM/gamegear"   , NULL,
+     NULL    , systemFilter, alphasort, gboyItemize, mednafenCommand },
   { "System" , "/home/pi/ROM/system"   , NULL,
      NULL    , systemFilter , alphasort, systemItemize, systemCommand }
 };
@@ -360,8 +364,8 @@ static int gboyItemize(Game *gList, int i) {
 
 // Given a Game struct and an output buffer, format a command string
 // for invoking fceu via system()
-static void gboyCommand(Game *g, char *cmdline) {
-	(void)sprintf(cmdline, "FRAMEBUFFER=/dev/fb1 SDL_FBDEV=/dev/fb1 /usr/games/mednafen \"%s/%s\" > /var/log/gnuboy.log",
+static void mednafenCommand(Game *g, char *cmdline) {
+	(void)sprintf(cmdline, "FRAMEBUFFER=/dev/fb1 SDL_FBDEV=/dev/fb1 /usr/games/mednafen \"%s/%s\" > /var/log/mednafen.log",
 	  emulator[g->emu].romPath, g->name);
 }
 
