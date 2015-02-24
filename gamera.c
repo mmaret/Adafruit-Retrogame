@@ -109,6 +109,7 @@ static int
   gboyFilter(const struct dirent *), gboyItemize(Game *, int),
   systemFilter(const struct dirent *), systemItemize(Game *, int);
 
+#define ROM_HOME "/home/pi/ROM/"
 // List of supported emulators
 static struct Emulator {
   const char *title;                           // Emulator name on menu
@@ -120,18 +121,20 @@ static struct Emulator {
   int        (*itemize)(Game *, int);          // Filenames to item list
   void       (*command)(Game *, char *);       // Prepare command line
 } emulator[] = {
-  { "MAME:", "/home/pi/ROM/mame", NULL,
-     mameInit, mameFilter, NULL     , mameItemize, mameCommand },
-  { "NES:" , "/home/pi/ROM/nes"   , NULL,
-     NULL    , fceuFilter, alphasort, fceuItemize, fceuCommand },
-  { "GameBoy:" , "/home/pi/ROM/gameboy"   , NULL,
-     NULL    , gboyFilter, alphasort, gboyItemize, mednafenCommand },
-  { "Lynx:" , "/home/pi/ROM/lynx"   , NULL,
-     NULL    , systemFilter, alphasort, gboyItemize, mednafenCommand },
-  { "GameGear:" , "/home/pi/ROM/gamegear"   , NULL,
-     NULL    , systemFilter, alphasort, gboyItemize, mednafenCommand },
-  { "System" , "/home/pi/ROM/system"   , NULL,
-     NULL    , systemFilter , alphasort, systemItemize, systemCommand }
+  { "MAME:"     , ROM_HOME"mame"         , NULL,
+     mameInit   , mameFilter             , NULL      , mameItemize, mameCommand },
+  { "NES:"      , ROM_HOME"nes"          , NULL,
+     NULL       , fceuFilter             , alphasort , fceuItemize, fceuCommand },
+  { "GameBoy:"  , ROM_HOME"gameboy"      , NULL,
+     NULL       , gboyFilter             , alphasort , gboyItemize, mednafenCommand },
+  { "Lynx:"     , ROM_HOME"lynx"         , NULL,
+     NULL       , systemFilter           , alphasort , gboyItemize, mednafenCommand },
+  { "GameGear:" , ROM_HOME"gamegear"     , NULL,
+     NULL       , systemFilter           , alphasort , gboyItemize, mednafenCommand },
+  { "Master:"   , ROM_HOME"mastersystem" , NULL,
+     NULL       , systemFilter           , alphasort , gboyItemize, mednafenCommand },
+  { "System"    , ROM_HOME"system"       , NULL,
+     NULL       , systemFilter           , alphasort , systemItemize, systemCommand }
 };
 #define N_EMULATORS (sizeof(emulator) / sizeof(emulator[0]))
 
